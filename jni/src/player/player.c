@@ -951,7 +951,20 @@ static void * performDecodeVideo(void * data) {
 	if (lastPacketValid) {
 		av_packet_unref(&lastPacket);
 	}
-	sparseArrayDestroyEach(&scaleContexts, sws_freeContext(data));
+	/* ORIGINAL LINE
+	sparseArrayDestroyEach(&scaleContexts, sws_freeContext(data)); */
+	/* FIX #1 - PREFERRED */
+	sparseArrayDestroy(&scaleContexts, sws_freeContext);
+    /* FIX #2 - JUST IN CASE
+    SparseArray *scaleContextPtr = &scaleContexts;
+    for (int i = 0; i < scaleContextPtr->count; i++) {
+        SparseArrayItem sparseArrayItem = scaleContextPtr->items[i];
+        if (sparseArrayItem.data != NULL) {
+            sws_freeContext(sparseArrayItem.data);
+        }
+    }
+    free(scaleContextPtr->items);
+    scaleContextPtr->count = 0; */
 	av_free(scaleHolder.scaleBuffer);
 	av_frame_free(&frame);
 	return NULL;
@@ -1425,7 +1438,20 @@ void destroy(JNIEnv * env, jlong pointer) {
 		free(player->audioBuffer);
 	}
 	updatePlayerSurface(env, player, NULL, 0);
-	sparseArrayDestroyEach(&player->bridges, free(data));
+	/* ORIGINAL LINE
+	sparseArrayDestroyEach(&player->bridges, free(data)); */
+	/* FIX #1 - PREFERRED */
+	sparseArrayDestroy(&player->bridges, free);
+	/* FIX #2 - JUST IN CASE
+	SparseArray *playerArrayPtr = &player->bridges;
+    for (int i = 0; i < playerArrayPtr ->count; i++) {
+        SparseArrayItem sparseArrayItem = playerArrayPtr->items[i];
+        if (sparseArrayItem.data != NULL) {
+            free(sparseArrayItem.data);
+        }
+    }
+    free(playerArrayPtr ->items);
+    playerArrayPtr->count = 0; */
 	(*env)->DeleteGlobalRef(env, player->nativeBridge);
 	free(player);
 }

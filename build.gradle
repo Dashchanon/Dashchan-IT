@@ -93,3 +93,28 @@ android {
 		targetCompatibility JavaVersion.VERSION_1_8
 	}
 }
+
+def getNdkBuildCommand() {
+	def ndkDir = System.env.ANDROID_NDK_HOME
+	if (ndkDir == null && file('local.properties').exists()) {
+		Properties localProperties = new Properties()
+		localProperties.load(new FileInputStream(file('local.properties')))
+		ndkDir = localProperties.getProperty('ndk.dir')
+	}
+	def windows = org.gradle.internal.os.OperatingSystem.current().isWindows()
+	return (ndkDir != null ? ndkDir + File.separator : '') + 'ndk-build' + (windows ? '.cmd' : '')
+}
+
+task ndkBuildCompile(type: Exec) {
+	commandLine getNdkBuildCommand(), '-C', file('.').absolutePath
+}
+
+task ndkBuildClean(type: Exec) {
+	commandLine getNdkBuildCommand(), 'clean', file('.').absolutePath
+}
+
+tasks.withType(JavaCompile) { compileTask ->
+	compileTask.dependsOn ndkBuildCompile
+}
+
+clean.dependsOn ndkBuildClean
