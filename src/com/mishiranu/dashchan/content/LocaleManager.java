@@ -42,7 +42,7 @@ public class LocaleManager {
 	private static final HashMap<String, Locale> VALUES_LOCALE_OBJECTS;
 
 	static {
-		String[] codes = {DEFAULT_LOCALE, "ru", "en", "pt_BR"};
+		String[] codes = {DEFAULT_LOCALE, "ru", "en", "it", "pt_BR"};
 		String[] names = new String[codes.length];
 		Locale[] locales = new Locale[codes.length];
 		names[0] = "System";
