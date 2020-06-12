@@ -16,6 +16,14 @@
 
 package com.mishiranu.dashchan.content.net;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,6 +41,7 @@ import chan.content.model.Post;
 import chan.http.HttpException;
 import chan.http.HttpHolder;
 import chan.http.HttpRequest;
+import chan.util.CommonUtils;
 import chan.util.StringUtils;
 
 import com.mishiranu.dashchan.C;
@@ -56,9 +65,42 @@ public class YouTubeTitlesReader {
 				builder.append(',');
 			}
 			builder.append(embeddedCodes.get(i));
+			JSONObject noembedResponse = null;
+			if(!StringUtils.isEmpty(embeddedCodes.get(i))){
+				String videoId = embeddedCodes.get(i);
+				/*
+					This could cause performance issues when a big
+					number of attachments is present, meaning several requests need to be made.
+					Should be replaced with the standard app approach of sending requests.
+				*/
+				HttpURLConnection urlConnection = null;
+				try {
+					URL url = new URL("https://noembed.com/embed?url=https://www.youtube.com/watch?v=" + videoId);
+					urlConnection = (HttpURLConnection) url.openConnection();
+					InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+					String contentAsString = convertInputStreamToString(in);
+					if(!StringUtils.isEmpty(contentAsString)){
+						noembedResponse = new JSONObject(contentAsString);
+					}
+				} catch (Exception e) {
+					// Ignore exception
+				} finally {
+					urlConnection.disconnect();
+				}
+				if(noembedResponse != null){
+					String title = CommonUtils.optJsonString(noembedResponse, "title");
+					if(!StringUtils.isEmpty(title)){
+						writeTo.put(videoId, title);
+					}
+				}
+			}
+
 		}
 		// This api is HTTPS-only
-		Uri uri = ChanLocator.getDefault().buildQueryWithSchemeHost(true, "www.googleapis.com", "youtube/v3/videos",
+		/*
+			Youtube API call disabled as the included API KEY no longer works
+		 */
+		/*Uri uri = ChanLocator.getDefault().buildQueryWithSchemeHost(true, "www.googleapis.com", "youtube/v3/videos",
 				"key", C.API_KEY_GOOGLE, "part", "snippet", "id", builder.toString());
 		JSONObject response = new HttpRequest(uri, holder).read().getJsonObject();
 		if (response != null) {
@@ -78,7 +120,7 @@ public class YouTubeTitlesReader {
 					}
 				}
 			}
-		}
+		}*/
 	}
 
 	private final HashMap<String, String> cachedYouTubeTitles = new HashMap<>();
@@ -294,5 +336,25 @@ public class YouTubeTitlesReader {
 				// Ignore exception
 			}
 		}
+	}
+
+	public String convertInputStreamToString(InputStream stream) throws IOException, UnsupportedEncodingException {
+		BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+		StringBuilder sb = new StringBuilder();
+		String line;
+		try {
+			while ((line = reader.readLine()) != null) {
+				sb.append(line).append("\n");
+			}
+		} catch (IOException e) {
+			// Ignore exception
+		} finally {
+			try {
+				stream.close();
+			} catch (IOException e) {
+
+			}
+		}
+		return sb.toString();
 	}
 }

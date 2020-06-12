@@ -70,12 +70,12 @@ public class EmbeddedManager {
 		Uri fileUri = locator.buildQueryWithSchemeHost(true, "www.youtube.com", "watch", "v", embeddedCode);
 		Uri thumbnailUri = locator.buildPathWithSchemeHost(true, "img.youtube.com", "vi", embeddedCode, "default.jpg");
 		return new EmbeddedAttachment(fileUri, thumbnailUri, "YouTube", EmbeddedAttachment.ContentType.VIDEO,
-				false, null);
+				false, null, embeddedCode);
 	}
 
 	public EmbeddedAttachment obtainVimeoAttachment(ChanLocator locator, String embeddedCode) {
 		Uri fileUri = locator.buildPathWithSchemeHost(true, "vimeo.com", embeddedCode);
-		return new EmbeddedAttachment(fileUri, null, "Vimeo", EmbeddedAttachment.ContentType.VIDEO, false, null);
+		return new EmbeddedAttachment(fileUri, null, "Vimeo", EmbeddedAttachment.ContentType.VIDEO, false, null, embeddedCode);
 	}
 
 	public EmbeddedAttachment obtainVocarooAttachment(ChanLocator locator, String embeddedCode) {
@@ -89,7 +89,7 @@ public class EmbeddedManager {
 		Uri fileUri = locator.buildPathWithSchemeHost(true, "soundcloud.com", embeddedCode);
 		String forcedName = "SoundCloud_" + embeddedCode.replace('/', '_') + ".mp3";
 		return new EmbeddedAttachment(fileUri, null, "SoundCloud", EmbeddedAttachment.ContentType.AUDIO,
-				true, forcedName);
+				false, forcedName, embeddedCode);
 	}
 
 	private final HashMap<String, Uri> soundcloudUriMap = new HashMap<>();

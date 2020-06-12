@@ -30,7 +30,7 @@ if (file('private.properties').exists()) {
 
 android {
 	compileSdkVersion 26
-	buildToolsVersion '28.0.3'
+	//buildToolsVersion '28.0.3'
 
 	sourceSets.main {
 		manifest.srcFile 'AndroidManifest.xml'
