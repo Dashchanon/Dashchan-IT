@@ -301,12 +301,16 @@ public class AboutFragment extends BasePreferenceFragment {
 			String page = "Changelog-EN";
 			for (Locale locale : LocaleManager.getInstance().list(context)) {
 				String language = locale.getLanguage();
+				if ("it".equals(language)) {
+					page = "Changelog-IT";
+					break;
+				}
 				if ("ru".equals(language)) {
 					page = "Changelog-RU";
 					break;
 				}
 			}
-			Uri uri = ChanLocator.getDefault().buildPathWithHost("github.com", "Mishiranu", "Dashchan", "wiki", page);
+			Uri uri = ChanLocator.getDefault().buildPathWithHost("github.com", "Dashchanon", "Dashchan-IT", "wiki", page);
 			try {
 				String result = new HttpRequest(uri, holder).read().getString();
 				if (result != null) {
