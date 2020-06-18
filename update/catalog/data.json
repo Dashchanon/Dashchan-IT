@@ -290,8 +290,8 @@
   [
     {
       "title": "Release",
-      "name": "1.6",
-      "code": 2,
+      "name": "1.7",
+      "code": 3,
       "version": 1,
       "minSdk": 16,
       "length": 32985,
