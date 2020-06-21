@@ -13,19 +13,6 @@
       "fingerprint": "18:83:22:11:46:8A:F6:D3:B8:3D:30:50:1C:E1:5D:33:05:8F:AC:9A:3A:CC:3B:EC:AD:D1:12:08:EE:AA:BC:B9"
     }
   ],
-  "abbracciafusto":
-  [
-    {
-      "title": "Release",
-      "name": "1.6",
-      "code": 2,
-      "version": 1,
-      "minSdk": 16,
-      "length": 33085,
-      "source": "/Dashchanon/Dashchan-IT/master/update/catalog/package/DashchanAbbracciafusto.apk",
-      "fingerprint": "18:83:22:11:46:8A:F6:D3:B8:3D:30:50:1C:E1:5D:33:05:8F:AC:9A:3A:CC:3B:EC:AD:D1:12:08:EE:AA:BC:B9"
-    }
-  ],
   "allchan":
   [
     {
