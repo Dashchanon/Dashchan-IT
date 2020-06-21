@@ -572,5 +572,28 @@
 	<string name="preference_watcher_watch_initially_summary">Abilita watcher quando aggiungi il thread
 		ai preferiti</string>
 	<string name="preference_watcher_wifi_only">Solo Wi-Fi</string>
+	<string name="text_spoiler">Spoiler</string>
+	<string name="text_total_posts_count_format">Numero totale di post: %s</string>
+	<string name="action_fast_scroll_posts_previous">Trova post precedenti</string>
+	<string name="action_fast_scroll_posts_forward">Trova post successivi</string>
+	<string name="action_rating_up">Like!</string>
+	<string name="action_rating_down">Dislike!</string>
+	<string name="message_download_name_format">File %s</string>
+	<string name="message_image_warning_exif">Metadati Exif</string>
+	<string name="preference_header_forum">Forum</string>
+	<string name="preference_category_search">Ricerca</string>
+	<string name="preference_fast_search">Ricerca rapida</string>
+	<string name="preference_fast_search_summary">La ricerca rapida permette di scorrere velocemente tra le risposte ai tuoi post</string>
+	<string name="preference_fast_search_source">Fonte dei messaggi per la ricerca rapida</string>
+	<string name="preference_fast_search_smooth_scroll">Scorrimento fluido ricerca rapida</string>
+	<string name="preference_fast_search_smooth_scroll_summary">Se abilitata, lo spostamento tra i messaggi avverrà con scorrimento</string>
+	<string name="preference_chrome_custom_tabs">Chrome Custom Tabs</string>
+	<string name="preference_chrome_custom_tabs_sumamry">Usa un browser più veloce</string>
+	<string name="preference_proxy">Proxy</string>
+	<string name="preference_use_exo_player">Usa ExoPlayer</string>
+	<string name="preference_use_exo_player_summary">Riproduci allegati video</string>
+	<string name="preference_is_hide_exo_player_system_ui">Nascondi UI di sistema</string>
+	<string name="preference_is_hide_exo_player_system_ui_summary">Nascondi elementi della UI (modalità schermo intero)</string>
+	<string name="notification_channel_file_has_been_downloaded">Il file è stato scaricato</string>
 
 </resources>

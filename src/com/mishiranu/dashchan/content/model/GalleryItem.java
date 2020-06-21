@@ -16,163 +16,200 @@
 
 package com.mishiranu.dashchan.content.model;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-
 import android.content.Context;
 import android.net.Uri;
-
-import chan.content.ChanLocator;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.mishiranu.dashchan.content.DownloadManager;
 import com.mishiranu.dashchan.util.NavigationUtils;
 
-public class GalleryItem implements Serializable {
-	private static final long serialVersionUID = 1L;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 
-	private final String fileUriString;
-	private final String thumbnailUriString;
+import chan.content.ChanLocator;
 
-	public final String boardName;
-	public final String threadNumber;
-	public final String postNumber;
+public class GalleryItem implements Serializable, Parcelable {
+    private static final long serialVersionUID = 1L;
 
-	public final String originalName;
+    private final String fileUriString;
+    private final String thumbnailUriString;
 
-	public final int width;
-	public final int height;
+    public final String boardName;
+    public final String threadNumber;
+    public final String postNumber;
 
-	public int size;
+    public final String originalName;
 
-	private transient Uri fileUri;
-	private transient Uri thumbnailUri;
+    public final int width;
+    public final int height;
 
-	public GalleryItem(Uri fileUri, Uri thumbnailUri, String boardName, String threadNumber, String postNumber,
-			String originalName, int width, int height, int size) {
-		fileUriString = fileUri != null ? fileUri.toString() : null;
-		thumbnailUriString = thumbnailUri != null ? thumbnailUri.toString() : null;
-		this.boardName = boardName;
-		this.threadNumber = threadNumber;
-		this.postNumber = postNumber;
-		this.originalName = originalName;
-		this.width = width;
-		this.height = height;
-		this.size = size;
-	}
+    public int size;
 
-	public GalleryItem(Uri fileUri, String boardName, String threadNumber) {
-		fileUriString = null;
-		thumbnailUriString = null;
-		this.boardName = boardName;
-		this.threadNumber = threadNumber;
-		postNumber = null;
-		originalName = null;
-		width = 0;
-		height = 0;
-		size = 0;
-		this.fileUri = fileUri;
-	}
+    private transient Uri fileUri;
+    private transient Uri thumbnailUri;
 
-	public boolean isImage(ChanLocator locator) {
-		return locator.isImageExtension(getFileName(locator));
-	}
+    public GalleryItem(Uri fileUri, Uri thumbnailUri, String boardName, String threadNumber, String postNumber,
+                       String originalName, int width, int height, int size) {
+        fileUriString = fileUri != null ? fileUri.toString() : null;
+        thumbnailUriString = thumbnailUri != null ? thumbnailUri.toString() : null;
+        this.boardName = boardName;
+        this.threadNumber = threadNumber;
+        this.postNumber = postNumber;
+        this.originalName = originalName;
+        this.width = width;
+        this.height = height;
+        this.size = size;
+    }
 
-	public boolean isVideo(ChanLocator locator) {
-		return locator.isVideoExtension(getFileName(locator));
-	}
+    public GalleryItem(Uri fileUri, String boardName, String threadNumber) {
+        fileUriString = null;
+        thumbnailUriString = null;
+        this.boardName = boardName;
+        this.threadNumber = threadNumber;
+        postNumber = null;
+        originalName = null;
+        width = 0;
+        height = 0;
+        size = 0;
+        this.fileUri = fileUri;
+    }
 
-	public boolean isOpenableVideo(ChanLocator locator) {
-		return NavigationUtils.isOpenableVideoPath(getFileName(locator));
-	}
+    public boolean isImage(ChanLocator locator) {
+        return locator.isImageExtension(getFileName(locator));
+    }
 
-	public Uri getFileUri(ChanLocator locator) {
-		if (fileUri == null && fileUriString != null) {
-			fileUri = locator.convert(Uri.parse(fileUriString));
-		}
-		return fileUri;
-	}
+    public boolean isVideo(ChanLocator locator) {
+        return locator.isVideoExtension(getFileName(locator));
+    }
 
-	public Uri getThumbnailUri(ChanLocator locator) {
-		if (thumbnailUri == null && thumbnailUriString != null) {
-			thumbnailUri = locator.convert(Uri.parse(thumbnailUriString));
-		}
-		return thumbnailUri;
-	}
+    public boolean isOpenableVideo(ChanLocator locator) {
+        return NavigationUtils.isOpenableVideoPath(getFileName(locator));
+    }
 
-	public Uri getDisplayImageUri(ChanLocator locator) {
-		return isImage(locator) ? getFileUri(locator) : getThumbnailUri(locator);
-	}
+    public Uri getFileUri(ChanLocator locator) {
+        if (fileUri == null && fileUriString != null) {
+            fileUri = locator.convert(Uri.parse(fileUriString));
+        }
+        return fileUri;
+    }
 
-	public String getFileName(ChanLocator locator) {
-		Uri fileUri = getFileUri(locator);
-		return locator.createAttachmentFileName(fileUri);
-	}
+    public Uri getThumbnailUri(ChanLocator locator) {
+        if (thumbnailUri == null && thumbnailUriString != null) {
+            thumbnailUri = locator.convert(Uri.parse(thumbnailUriString));
+        }
+        return thumbnailUri;
+    }
 
-	public void downloadStorage(Context context, ChanLocator locator, String threadTitle) {
-		DownloadManager.getInstance().downloadStorage(context, getFileUri(locator), getFileName(locator), originalName,
-				locator.getChanName(), boardName, threadNumber, threadTitle);
-	}
+    public Uri getDisplayImageUri(ChanLocator locator) {
+        return isImage(locator) ? getFileUri(locator) : getThumbnailUri(locator);
+    }
 
-	public void cleanup() {
-		if (fileUriString != null) {
-			fileUri = null;
-		}
-		if (thumbnailUriString != null) {
-			thumbnailUri = null;
-		}
-	}
+    public String getFileName(ChanLocator locator) {
+        Uri fileUri = getFileUri(locator);
+        return locator.createAttachmentFileName(fileUri);
+    }
 
-	public static class GallerySet {
-		private final boolean navigatePostSupported;
-		private final ArrayList<GalleryItem> galleryItems = new ArrayList<>();
+    public void downloadStorage(Context context, ChanLocator locator, String threadTitle) {
+        DownloadManager.getInstance().downloadStorage(context, getFileUri(locator), getFileName(locator), originalName,
+                locator.getChanName(), boardName, threadNumber, threadTitle);
+    }
 
-		private String threadTitle;
+    public void cleanup() {
+        if (fileUriString != null) {
+            fileUri = null;
+        }
+        if (thumbnailUriString != null) {
+            thumbnailUri = null;
+        }
+    }
 
-		public GallerySet(boolean navigatePostSupported) {
-			this.navigatePostSupported = navigatePostSupported;
-		}
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
-		public void setThreadTitle(String threadTitle) {
-			this.threadTitle = threadTitle;
-		}
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(fileUri, flags);
+        dest.writeParcelable(thumbnailUri, flags);
+        dest.writeString(boardName);
+        dest.writeString(threadNumber);
+        dest.writeString(postNumber);
+        dest.writeString(originalName);
+        dest.writeInt(width);
+        dest.writeInt(height);
+        dest.writeInt(size);
+    }
 
-		public String getThreadTitle() {
-			return threadTitle;
-		}
+    // this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods
+    public static final Parcelable.Creator<GalleryItem> CREATOR = new Parcelable.Creator<GalleryItem>() {
+        @SuppressWarnings("unchecked")
+        public GalleryItem createFromParcel(Parcel in) {
+            // Uri fileUri, Uri thumbnailUri, String boardName, String threadNumber, String postNumber,
+            // String originalName, int width, int height, int size
+            return new GalleryItem(in.readParcelable(getClass().getClassLoader()),
+                    in.readParcelable(getClass().getClassLoader()),
+                    in.readString(), in.readString(), in.readString(), in.readString(),
+                    in.readInt(), in.readInt(), in.readInt());
+        }
 
-		public void add(Collection<AttachmentItem> attachmentItems) {
-			if (attachmentItems != null) {
-				for (AttachmentItem attachmentItem : attachmentItems) {
-					if (attachmentItem.isShowInGallery() && attachmentItem.canDownloadToStorage()) {
-						add(attachmentItem.createGalleryItem());
-					}
-				}
-			}
-		}
+        public GalleryItem[] newArray(int size) {
+            return new GalleryItem[size];
+        }
+    };
 
-		public void add(GalleryItem galleryItem) {
-			if (galleryItem != null) {
-				galleryItems.add(galleryItem);
-			}
-		}
+    public static class GallerySet {
+        private final boolean navigatePostSupported;
+        private final ArrayList<GalleryItem> galleryItems = new ArrayList<>();
 
-		public void cleanup() {
-			for (GalleryItem galleryItem : galleryItems) {
-				galleryItem.cleanup();
-			}
-		}
+        private String threadTitle;
 
-		public void clear() {
-			galleryItems.clear();
-		}
+        public GallerySet(boolean navigatePostSupported) {
+            this.navigatePostSupported = navigatePostSupported;
+        }
 
-		public ArrayList<GalleryItem> getItems() {
-			return galleryItems.size() > 0 ? galleryItems : null;
-		}
+        public void setThreadTitle(String threadTitle) {
+            this.threadTitle = threadTitle;
+        }
 
-		public boolean isNavigatePostSupported() {
-			return navigatePostSupported;
-		}
-	}
+        public String getThreadTitle() {
+            return threadTitle;
+        }
+
+        public void add(Collection<AttachmentItem> attachmentItems) {
+            if (attachmentItems != null) {
+                for (AttachmentItem attachmentItem : attachmentItems) {
+                    if (attachmentItem.isShowInGallery() && attachmentItem.canDownloadToStorage()) {
+                        add(attachmentItem.createGalleryItem());
+                    }
+                }
+            }
+        }
+
+        public void add(GalleryItem galleryItem) {
+            if (galleryItem != null) {
+                galleryItems.add(galleryItem);
+            }
+        }
+
+        public void cleanup() {
+            for (GalleryItem galleryItem : galleryItems) {
+                galleryItem.cleanup();
+            }
+        }
+
+        public void clear() {
+            galleryItems.clear();
+        }
+
+        public ArrayList<GalleryItem> getItems() {
+            return galleryItems.size() > 0 ? galleryItems : null;
+        }
+
+        public boolean isNavigatePostSupported() {
+            return navigatePostSupported;
+        }
+    }
 }
