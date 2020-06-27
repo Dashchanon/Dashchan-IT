@@ -175,7 +175,7 @@ public class DraftsStorage extends StorageManager.Storage {
                 int index = postDrafts.indexOf(postDraft);
                 postDrafts.remove(index);
                 postDraft = new PostDraft(chanName, toBoardName, toThreadNumber, postDraft.name, postDraft.email,
-                        postDraft.password, postDraft.subject, postDraft.comment, postDraft.commentCarriage,
+                        postDraft.password, postDraft.subject, postDraft.embed, postDraft.comment, postDraft.commentCarriage,
                         postDraft.attachmentDrafts, postDraft.optionSage, postDraft.optionSpoiler,
                         postDraft.optionOriginalPoster, postDraft.userIcon);
                 postDrafts.add(index, postDraft);
@@ -331,6 +331,7 @@ public class DraftsStorage extends StorageManager.Storage {
         private static final String KEY_EMAIL = "email";
         private static final String KEY_PASSWORD = "password";
         private static final String KEY_SUBJECT = "subject";
+        private static final String KEY_EMBED = "embed";
         private static final String KEY_COMMENT = "comment";
         private static final String KEY_COMMENT_CARRIAGE = "commentCarriage";
         private static final String KEY_ATTACHMENT_DRAFTS = "attachmentDrafts";
@@ -347,6 +348,7 @@ public class DraftsStorage extends StorageManager.Storage {
         public final String email;
         public final String password;
         public final String subject;
+        public final String embed;
         public final String comment;
         public final int commentCarriage;
         public final ArrayList<AttachmentDraft> attachmentDrafts;
@@ -373,6 +375,28 @@ public class DraftsStorage extends StorageManager.Storage {
             this.commentCarriage = commentCarriage;
             this.attachmentDrafts = attachmentDrafts;
             this.optionSpoiler = optionSpoiler;
+            this.embed = null;
+        }
+
+        public PostDraft(String chanName, String boardName, String threadNumber,
+                         String name, String email, String password, String subject, String embed, String comment, int commentCarriage,
+                         ArrayList<AttachmentDraft> attachmentDrafts, boolean optionSage, boolean optionSpoiler,
+                         boolean optionOriginalPoster, String userIcon) {
+            this.chanName = chanName;
+            this.boardName = boardName;
+            this.threadNumber = threadNumber;
+            this.name = name;
+            this.email = email;
+            this.password = password;
+            this.optionSage = optionSage;
+            this.optionOriginalPoster = optionOriginalPoster;
+            this.userIcon = userIcon;
+            this.subject = subject;
+            this.embed = embed;
+            this.comment = comment;
+            this.commentCarriage = commentCarriage;
+            this.attachmentDrafts = attachmentDrafts;
+            this.optionSpoiler = optionSpoiler;
         }
 
         public PostDraft(String chanName, String boardName, String threadNumber,
@@ -384,7 +408,7 @@ public class DraftsStorage extends StorageManager.Storage {
 
         public boolean isEmpty() {
             return StringUtils.isEmpty(name) && StringUtils.isEmpty(email) && StringUtils.isEmpty(password) &&
-                    StringUtils.isEmpty(subject) && StringUtils.isEmpty(comment) &&
+                    StringUtils.isEmpty(subject) && StringUtils.isEmpty(embed) && StringUtils.isEmpty(comment) &&
                     (attachmentDrafts == null || attachmentDrafts.isEmpty()) &&
                     !optionSage && !optionSpoiler && !optionOriginalPoster && StringUtils.isEmpty(userIcon);
         }
@@ -398,6 +422,7 @@ public class DraftsStorage extends StorageManager.Storage {
             putJson(jsonObject, KEY_EMAIL, email);
             putJson(jsonObject, KEY_PASSWORD, password);
             putJson(jsonObject, KEY_SUBJECT, subject);
+            putJson(jsonObject, KEY_EMBED, embed);
             putJson(jsonObject, KEY_COMMENT, comment);
             putJson(jsonObject, KEY_COMMENT_CARRIAGE, commentCarriage);
             if (attachmentDrafts != null && !attachmentDrafts.isEmpty()) {
@@ -422,6 +447,7 @@ public class DraftsStorage extends StorageManager.Storage {
             String email = jsonObject.optString(KEY_EMAIL, null);
             String password = jsonObject.optString(KEY_PASSWORD, null);
             String subject = jsonObject.optString(KEY_SUBJECT, null);
+            String embed = jsonObject.optString(KEY_EMBED, null);
             String comment = jsonObject.optString(KEY_COMMENT, null);
             int commentCarriage = jsonObject.optInt(KEY_COMMENT_CARRIAGE);
             ArrayList<AttachmentDraft> attachmentDrafts = null;
@@ -444,7 +470,7 @@ public class DraftsStorage extends StorageManager.Storage {
             boolean optionSpoiler = jsonObject.optBoolean(KEY_OPTION_SPOILER);
             boolean optionOriginalPoster = jsonObject.optBoolean(KEY_OPTION_ORIGINAL_POSTER);
             String userIcon = jsonObject.optString(KEY_USER_ICON, null);
-            return new PostDraft(chanName, boardName, threadNumber, name, email, password, subject, comment,
+            return new PostDraft(chanName, boardName, threadNumber, name, email, password, subject, embed, comment,
                     commentCarriage, attachmentDrafts, optionSage, optionSpoiler, optionOriginalPoster, userIcon);
         }
     }

@@ -55,6 +55,7 @@
     <string name="text_disabled_names">Имена отключены</string>
     <string name="text_disabled_sage">Sage отключено</string>
     <string name="text_disabled_subjects">Темы отключены</string>
+    <string name="text_disabled_embeds">Embeds are disabled</string>
     <string name="text_disabled_tripcodes">Трипкоды отключены</string>
     <string name="text_dont_replace">Не заменять</string>
     <string name="text_download_title">Выберите путь сохранения</string>
@@ -158,6 +159,7 @@
     <string name="text_spoiler">Спойлер</string>
     <string name="text_sticky_thread">Тред прикреплён</string>
     <string name="text_subject">Тема</string>
+    <string name="text_embed">Embed</string>
     <string name="text_test_string">Тестовая строка</string>
     <string name="text_this_week">Эта неделя</string>
     <string name="text_thread">Тред</string>

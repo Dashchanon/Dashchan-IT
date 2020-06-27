@@ -55,6 +55,7 @@ public final class Post implements Serializable, Comparable<Post> {
 
     private long mTimestamp;
     private String mSubject;
+    private String mEmbed;
     private String mComment;
     private String mEditedComment;
     private String mCommentMarkup;
@@ -186,6 +187,17 @@ public final class Post implements Serializable, Comparable<Post> {
     @Public
     public Post setSubject(String subject) {
         mSubject = StringUtils.nullIfEmpty(subject);
+        return this;
+    }
+
+    @Public
+    public String getEmbed() {
+        return mEmbed;
+    }
+
+    @Public
+    public Post setEmbed(String embed) {
+        mEmbed = StringUtils.nullIfEmpty(embed);
         return this;
     }
 
@@ -562,6 +574,7 @@ public final class Post implements Serializable, Comparable<Post> {
                 StringUtils.equals(mPostNumber, o.mPostNumber) &&
                 mTimestamp == o.mTimestamp &&
                 StringUtils.equals(mSubject, o.mSubject) &&
+                StringUtils.equals(mEmbed, o.mEmbed) &&
                 StringUtils.equals(mComment, o.mComment) &&
                 StringUtils.equals(mCommentMarkup, o.mCommentMarkup) &&
                 StringUtils.equals(mName, o.mName) &&
@@ -578,6 +591,7 @@ public final class Post implements Serializable, Comparable<Post> {
                 .setPostNumber(mPostNumber)
                 .setTimestamp(mTimestamp)
                 .setSubject(mSubject)
+                .setEmbed(mEmbed)
                 .setComment(mComment)
                 .setEditedComment(mEditedComment)
                 .setCommentMarkup(mCommentMarkup)

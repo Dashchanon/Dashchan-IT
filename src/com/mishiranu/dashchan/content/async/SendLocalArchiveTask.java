@@ -143,6 +143,7 @@ public class SendLocalArchiveTask extends CancellableTask<Void, Integer, Object>
             String capcode = post.getCapcode();
             String email = post.getEmail();
             String subject = post.getSubject();
+            String embed = post.getEmbed();
             String comment = post.getWorkComment();
             long timestamp = post.getTimestamp();
             boolean sage = post.isSage();
@@ -215,7 +216,7 @@ public class SendLocalArchiveTask extends CancellableTask<Void, Integer, Object>
                 }
             }
             comment = builder.toString().replaceAll("\r", "").replaceAll("\n", "<br />");
-            htmlBuilder.addPost(number, subject, name, identifier, tripcode, capcode, email,
+            htmlBuilder.addPost(number, subject, embed, name, identifier, tripcode, capcode, email,
                     sage, originalPoster, timestamp, deleted, useDefaultName, comment);
             if (iconsCount > 0) {
                 for (int i = 0; i < iconsCount; i++) {

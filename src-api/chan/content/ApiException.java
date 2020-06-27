@@ -89,6 +89,10 @@ public final class ApiException extends Exception {
     @Public
     public static final int ARCHIVE_ERROR_TOO_OFTEN = 401;
 
+    /* RESERVED
+	@Public public static final int SEND_ERROR_EMBED_ISSUE = -1;
+	*/
+
     @Public
     public static final int FLAG_KEEP_CAPTCHA = 0x00000001;
 
@@ -220,6 +224,11 @@ public final class ApiException extends Exception {
                 resId = R.string.message_subject_too_short;
                 break;
             }
+            /* RESERVED
+			case ApiException.SEND_ERROR_EMBED_ISSUE: {
+				resId = R.string.message_embed_issue;
+				break;
+			}*/
             case ApiException.SEND_ERROR_EMPTY_COMMENT: {
                 resId = R.string.message_comment_too_short;
                 break;

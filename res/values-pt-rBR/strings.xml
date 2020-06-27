@@ -51,6 +51,7 @@
     <string name="text_disabled_names">Nomes estão desabilitados</string>
     <string name="text_disabled_sage">Sage está desabilitado</string>
     <string name="text_disabled_subjects">Assuntos estão desabilitados</string>
+    <string name="text_disabled_embeds">Embeds estão desabilitados</string>
     <string name="text_disabled_tripcodes">Tripcodes estão desabilitados</string>
     <string name="text_dont_replace">Não substituir</string>
     <string name="text_download_title">Salvar aonde?</string>
@@ -130,6 +131,7 @@
     <string name="text_spoiler">Spoiler</string>
     <string name="text_sticky_thread">Fio fixo</string>
     <string name="text_subject">Assunto</string>
+    <string name="text_embed">Embed</string>
     <string name="text_this_week">Essa semana</string>
     <string name="text_thread">Fio</string>
     <string name="text_thread_files_format">%d com imagens</string>

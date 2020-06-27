@@ -107,6 +107,15 @@
             android:maxLength="60"
             android:singleLine="true" />
 
+        <com.mishiranu.dashchan.widget.SafePasteEditText
+            android:id="@+id/embed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/text_embed"
+            android:inputType="textShortMessage|textCapSentences"
+            android:maxLength="60"
+            android:singleLine="true" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

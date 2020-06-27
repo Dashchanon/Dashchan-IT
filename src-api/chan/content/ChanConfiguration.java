@@ -270,6 +270,8 @@ public class ChanConfiguration implements ChanManager.Linked {
         public boolean allowEmail = false;
         @Public
         public boolean allowSubject = false;
+        @Public
+        public boolean allowEmbed = false;
 
         @Public
         public boolean optionSage = false;

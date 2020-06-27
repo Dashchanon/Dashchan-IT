@@ -62,6 +62,7 @@ public class PostItem implements AttachmentItem.Binder, ChanMarkup.MarkupExtra, 
     private int ordinalIndex = ORDINAL_INDEX_NONE;
 
     private String subject;
+    private String embed;
     private CharSequence comment;
     private CharSequence fullName;
     private ColorScheme.Span[] commentSpans;
@@ -444,6 +445,23 @@ public class PostItem implements AttachmentItem.Binder, ChanMarkup.MarkupExtra, 
             }
         }
         return subject;
+    }
+
+    public String getEmbed() {
+        if (embed == null) {
+            synchronized (this) {
+                if (embed == null) {
+                    String embed = post.getEmbed();
+                    if (embed != null) {
+                        //
+                    } else {
+                        embed = "";
+                    }
+                    this.embed = embed;
+                }
+            }
+        }
+        return embed;
     }
 
     private static CharSequence obtainComment(String comment, String chanName, String parentPostNumber,

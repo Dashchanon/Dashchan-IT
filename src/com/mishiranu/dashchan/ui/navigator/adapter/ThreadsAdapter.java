@@ -556,6 +556,9 @@ public class ThreadsAdapter extends BaseAdapter implements BusyScrollListener.Ca
                 if (!posting.allowSubject) {
                     appendNewLine(builder, context.getString(R.string.text_disabled_subjects));
                 }
+                if (!posting.allowEmbed) {
+                    appendNewLine(builder, context.getString(R.string.text_disabled_embeds));
+                }
                 if (!posting.allowName) {
                     appendNewLine(builder, context.getString(R.string.text_disabled_names));
                 } else if (!posting.allowTripcode) {

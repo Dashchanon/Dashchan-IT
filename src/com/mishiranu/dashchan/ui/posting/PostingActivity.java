@@ -144,6 +144,7 @@ public class PostingActivity extends StateActivity implements View.OnClickListen
     private EditText emailView;
     private EditText passwordView;
     private EditText subjectView;
+    private EditText embedView;
     private DropdownView iconView;
     private View personalDataBlock;
     private ViewGroup textFormatView;
@@ -234,6 +235,7 @@ public class PostingActivity extends StateActivity implements View.OnClickListen
         emailView = findViewById(R.id.email);
         passwordView = findViewById(R.id.password);
         subjectView = findViewById(R.id.subject);
+        embedView = findViewById(R.id.embed);
         iconView = findViewById(R.id.icon);
         personalDataBlock = findViewById(R.id.personal_data_block);
         attachmentContainer = findViewById(R.id.attachment_container);
@@ -295,6 +297,7 @@ public class PostingActivity extends StateActivity implements View.OnClickListen
             emailView.setText(postDraft.email);
             passwordView.setText(postDraft.password);
             subjectView.setText(postDraft.subject);
+            embedView.setText(postDraft.embed);
             sageCheckBox.setChecked(postDraft.optionSage);
             spoilerCheckBox.setChecked(postDraft.optionSpoiler);
             originalPosterCheckBox.setChecked(postDraft.optionOriginalPoster);
@@ -482,6 +485,7 @@ public class PostingActivity extends StateActivity implements View.OnClickListen
             }
         }
         String subject = subjectView.getText().toString();
+        String embed = embedView.getText().toString();
         String comment = commentView.getText().toString();
         int commentCarriage = commentView.getSelectionEnd();
         String name = nameView.getText().toString();
@@ -492,7 +496,7 @@ public class PostingActivity extends StateActivity implements View.OnClickListen
         boolean optionOriginalPoster = originalPosterCheckBox.isChecked();
         String userIcon = getUserIcon();
         return new DraftsStorage.PostDraft(chanName, boardName, threadNumber, name, email, password,
-                subject, comment, commentCarriage, attachmentDrafts,
+                subject, embed, comment, commentCarriage, attachmentDrafts,
                 optionSage, optionSpoiler, optionOriginalPoster, userIcon);
     }
 
@@ -625,6 +629,7 @@ public class PostingActivity extends StateActivity implements View.OnClickListen
             emailView.setVisibility(posting.allowEmail ? View.VISIBLE : View.GONE);
             passwordView.setVisibility(needPassword ? View.VISIBLE : View.GONE);
             subjectView.setVisibility(posting.allowSubject ? View.VISIBLE : View.GONE);
+            embedView.setVisibility(posting.allowEmbed ? View.VISIBLE : View.GONE);
             sageCheckBox.setVisibility(posting.optionSage ? View.VISIBLE : View.GONE);
             spoilerCheckBox.setVisibility(posting.optionSpoiler ? View.VISIBLE : View.GONE);
             originalPosterCheckBox.setVisibility(posting.optionOriginalPoster ? View.VISIBLE : View.GONE);
@@ -675,7 +680,8 @@ public class PostingActivity extends StateActivity implements View.OnClickListen
         }
         boolean views = oldPosting.allowName != newPosting.allowName || oldPosting.allowEmail != newPosting.allowEmail
                 || oldPosting.allowTripcode != newPosting.allowTripcode
-                || oldPosting.allowSubject != newPosting.allowSubject || oldPosting.optionSage != newPosting.optionSage
+                || oldPosting.allowSubject != newPosting.allowSubject || oldPosting.allowEmbed != newPosting.allowEmbed
+                || oldPosting.optionSage != newPosting.optionSage
                 || oldPosting.optionSpoiler != newPosting.optionSpoiler
                 || oldPosting.optionOriginalPoster != newPosting.optionOriginalPoster
                 || oldPosting.maxCommentLength != newPosting.maxCommentLength
@@ -825,6 +831,7 @@ public class PostingActivity extends StateActivity implements View.OnClickListen
             return;
         }
         String subject = getTextIfVisible(subjectView);
+        String embed = getTextIfVisible(embedView);
         String comment = getTextIfVisible(commentView);
         String name = getTextIfVisible(nameView);
         String email = getTextIfVisible(emailView);
@@ -875,7 +882,7 @@ public class PostingActivity extends StateActivity implements View.OnClickListen
         }
         String captchaType = loadedCaptchaType != null ? loadedCaptchaType : this.captchaType;
         ChanPerformer.SendPostData data = new ChanPerformer.SendPostData(boardName, threadNumber,
-                subject, comment, name, email, password, attachments, optionSage, optionSpoiler, optionOriginalPoster,
+                subject, embed, comment, name, email, password, attachments, optionSage, optionSpoiler, optionOriginalPoster,
                 userIcon, captchaType, captchaData, 15000, 45000);
         DraftsStorage.getInstance().store(obtainPostDraft());
         postingServiceBinder.executeSendPost(chanName, data);

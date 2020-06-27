@@ -108,6 +108,7 @@ public class WakabaLikeHtmlBuilder {
     private boolean originalPost = true;
     private String number;
     private String subject;
+    private String embed;
     private String name;
     private String identifier;
     private String tripcode;
@@ -149,6 +150,27 @@ public class WakabaLikeHtmlBuilder {
         closePost();
         this.number = number;
         this.subject = subject;
+        this.name = name;
+        this.identifier = identifier;
+        this.tripcode = tripcode;
+        this.capcode = capcode;
+        this.email = email;
+        this.sage = sage;
+        this.originalPoster = originalPoster;
+        this.timestamp = timestamp;
+        this.deleted = deleted;
+        this.useDefaultName = useDefaultName;
+        this.comment = comment;
+        this.embed = null;
+    }
+
+    public void addPost(String number, String subject, String embed, String name, String identifier, String tripcode, String capcode,
+                        String email, boolean sage, boolean originalPoster, long timestamp, boolean deleted,
+                        boolean useDefaultName, String comment) {
+        closePost();
+        this.number = number;
+        this.subject = subject;
+        this.embed = embed;
         this.name = name;
         this.identifier = identifier;
         this.tripcode = tripcode;
@@ -223,6 +245,7 @@ public class WakabaLikeHtmlBuilder {
     private void appendHeader(boolean originalPost) {
         String number = this.number;
         String subject = this.subject;
+        String embed = this.embed;
         String name = this.name;
         String identifier = this.identifier;
         String tripcode = this.tripcode;
@@ -246,6 +269,11 @@ public class WakabaLikeHtmlBuilder {
         if (!StringUtils.isEmpty(subject)) {
             builder.append("<span class=\"replytitle\" data-subject=\"true\">").append(subject).append("</span>\n");
         }
+        /* RESERVED
+		if (!StringUtils.isEmpty(embed)) {
+			// ?
+		}
+		*/
         if (name == null) {
             name = "";
         }

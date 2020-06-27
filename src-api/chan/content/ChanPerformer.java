@@ -779,6 +779,8 @@ public class ChanPerformer implements ChanManager.Linked {
         @Public
         public final String subject;
         @Public
+        public final String embed;
+        @Public
         public final String comment;
         @Public
         public final String name;
@@ -981,6 +983,30 @@ public class ChanPerformer implements ChanManager.Linked {
             this.boardName = boardName;
             this.threadNumber = threadNumber;
             this.subject = subject;
+            this.comment = comment;
+            this.name = name;
+            this.email = email;
+            this.password = password;
+            this.attachments = attachments;
+            this.optionSage = optionSage;
+            this.optionSpoiler = optionSpoiler;
+            this.optionOriginalPoster = optionOriginalPoster;
+            this.userIcon = userIcon;
+            this.captchaType = captchaType;
+            this.captchaData = captchaData;
+            this.connectTimeout = connectTimeout;
+            this.readTimeout = readTimeout;
+            this.embed = null;
+        }
+
+        public SendPostData(String boardName, String threadNumber, String subject, String embed, String comment,
+                            String name, String email, String password, Attachment[] attachments, boolean optionSage,
+                            boolean optionSpoiler, boolean optionOriginalPoster, String userIcon, String captchaType,
+                            CaptchaData captchaData, int connectTimeout, int readTimeout) {
+            this.boardName = boardName;
+            this.threadNumber = threadNumber;
+            this.subject = subject;
+            this.embed = embed;
             this.comment = comment;
             this.name = name;
             this.email = email;

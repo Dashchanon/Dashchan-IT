@@ -53,6 +53,7 @@
 	<string name="text_disabled_names">I nomi sono disabilitati</string>
 	<string name="text_disabled_sage">Sage disabilitato</string>
 	<string name="text_disabled_subjects">Gli oggetti sono disabilitati</string>
+	<string name="text_disabled_embeds">Gli embed sono disabilitati</string>
 	<string name="text_disabled_tripcodes">I tripcode sono disabilitati</string>
 	<string name="text_dont_replace">Non sostituire</string>
 	<string name="text_download_title">Seleziona destinazione</string>
@@ -144,6 +145,7 @@
 	<!--<string name="text_spoiler">Spoiler</string>-->
 	<string name="text_sticky_thread">Thread fissato</string>
 	<string name="text_subject">Oggetto</string>
+	<string name="text_embed">Embed</string>
 	<string name="text_test_string">Stringa di test</string>
 	<string name="text_this_week">Questa settimana</string>
 	<string name="text_thread">Thread</string>

@@ -53,6 +53,7 @@
     <string name="text_disabled_names">Names are disabled</string>
     <string name="text_disabled_sage">Sage is disabled</string>
     <string name="text_disabled_subjects">Subjects are disabled</string>
+    <string name="text_disabled_embeds">Embeds are disabled</string>
     <string name="text_disabled_tripcodes">Tripcodes are disabled</string>
     <string name="text_dont_replace">Don\'t replace</string>
     <string name="text_download_title">Select where to save</string>
@@ -144,6 +145,7 @@
     <string name="text_spoiler">Spoiler</string>
     <string name="text_sticky_thread">Sticky thread</string>
     <string name="text_subject">Subject</string>
+    <string name="text_embed">Embed</string>
     <string name="text_test_string">Test string</string>
     <string name="text_this_week">This week</string>
     <string name="text_thread">Thread</string>

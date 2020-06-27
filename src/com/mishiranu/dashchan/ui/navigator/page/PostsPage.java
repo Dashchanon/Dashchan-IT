@@ -771,6 +771,7 @@ public class PostsPage extends ListPage<PostsAdapter> implements FavoritesStorag
                     }
                 }
                 String subject = postItem.getSubject().toLowerCase(locale);
+                String embed = postItem.getEmbed().toLowerCase(locale);
                 String name = postItem.getFullName().toString().toLowerCase(locale);
                 fileNames.clear();
                 ArrayList<AttachmentItem> attachmentItems = postItem.getAttachmentItems();
@@ -794,6 +795,9 @@ public class PostsPage extends ListPage<PostsAdapter> implements FavoritesStorag
                             found = true;
                             break;
                         } else if (subject.contains(lowQuery)) {
+                            found = true;
+                            break;
+                        } else if (embed.contains(lowQuery)) {
                             found = true;
                             break;
                         } else if (name.contains(lowQuery)) {
