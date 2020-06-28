@@ -277,8 +277,8 @@
   [
     {
       "title": "Release",
-      "name": "1.8",
-      "code": 4,
+      "name": "1.8.1",
+      "code": 5,
       "version": 1,
       "minSdk": 16,
       "length": 33872,
