@@ -27,6 +27,8 @@
         <item name="actionBack">@drawable/ic_action_back_dark</item>
         <item name="actionDelete">@drawable/ic_action_discard_dark</item>
         <item name="actionDownload">@drawable/ic_action_download_dark</item>
+        <item name="actionFindNext">@drawable/ic_find_next_mtrl_alpha</item>
+        <item name="actionFindPrevious">@drawable/ic_find_previous_mtrl_alpha</item>
         <item name="actionForward">@drawable/ic_action_forward_dark</item>
         <item name="actionMakeThreadshot">@drawable/ic_action_camera_dark</item>
         <item name="actionRefresh">@drawable/ic_action_refresh_dark</item>
@@ -81,6 +83,8 @@
         <item name="actionBack">@drawable/ic_action_back_dark</item>
         <item name="actionDelete">@drawable/ic_action_discard_dark</item>
         <item name="actionDownload">@drawable/ic_action_download_dark</item>
+        <item name="actionFindNext">@drawable/ic_find_next_mtrl_alpha</item>
+        <item name="actionFindPrevious">@drawable/ic_find_previous_mtrl_alpha</item>
         <item name="actionForward">@drawable/ic_action_forward_dark</item>
         <item name="actionMakeThreadshot">@drawable/ic_action_camera_dark</item>
         <item name="actionRefresh">@drawable/ic_action_refresh_dark</item>

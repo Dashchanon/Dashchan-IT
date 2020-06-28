@@ -49,6 +49,8 @@
     <attr name="actionBack" format="reference" />
     <attr name="actionDelete" format="reference" />
     <attr name="actionDownload" format="reference" />
+    <attr name="actionFindNext" format="reference" />
+    <attr name="actionFindPrevious" format="reference" />
     <attr name="actionForward" format="reference" />
     <attr name="actionMakeThreadshot" format="reference" />
     <attr name="actionRefresh" format="reference" />
