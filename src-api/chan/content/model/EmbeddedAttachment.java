@@ -76,12 +76,9 @@ public final class EmbeddedAttachment implements Attachment {
         String urlPrefix = "";
         String thumbnailUriString = null;
         boolean isVimeo = "vimeo".equalsIgnoreCase(embeddedType.toLowerCase());
-        boolean isYoutube = "youtube".equalsIgnoreCase(embeddedType.toLowerCase());
         boolean isSoundCloud = "soundcloud".equalsIgnoreCase(embeddedType.toLowerCase());
         if (isVimeo) {
             urlPrefix = "https://noembed.com/embed?url=https://player.vimeo.com/video/";
-        } else if(isYoutube){
-            urlPrefix = "https://noembed.com/embed?url=https://www.youtube.com/watch?v=";
         } else if(isSoundCloud) {
             urlPrefix = "https://noembed.com/embed?url=https://soundcloud.com/";
         }
@@ -112,11 +109,9 @@ public final class EmbeddedAttachment implements Attachment {
                     title = CommonUtils.optJsonString(noembedResponse, "title");
                     if(!StringUtils.isEmpty(title)){
                         mTitle = title;
-                        if(isVimeo || isSoundCloud){
-                            thumbnailUriString = CommonUtils.optJsonString(noembedResponse, "thumbnail_url");
-                            if("".equals(thumbnailUriString)){
-                                thumbnailUriString = null;
-                            }
+                        thumbnailUriString = CommonUtils.optJsonString(noembedResponse, "thumbnail_url");
+                        if("".equals(thumbnailUriString)){
+                            thumbnailUriString = null;
                         }
                     }
                 }
