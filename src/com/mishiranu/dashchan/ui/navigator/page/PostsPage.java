@@ -330,10 +330,19 @@ public class PostsPage extends ListPage<PostsAdapter> implements FavoritesStorag
     @Override
     public void onCreateOptionsMenu(Menu menu) {
         if (Preferences.isFastSearch()) {
-            menu.add(0, OPTIONS_MENU_FAST_SCROLL_POSTS_PREVIOUS, 0, R.string.action_fast_scroll_posts_previous)
-                    .setIcon(obtainIcon(R.attr.actionBack)).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-            menu.add(0, OPTIONS_MENU_FAST_SCROLL_POSTS_FORWARD, 0, R.string.action_fast_scroll_posts_forward)
-                    .setIcon(obtainIcon(R.attr.actionForward)).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+            int fast_scroll_prev = 0;
+            int fast_scroll_next = 0;
+            if(Preferences.getFastSearchSource().equals(Preferences.VALUES_FAST_SEARCH_SOURCE_MY_POSTS)){
+                fast_scroll_prev = R.string.action_fast_scroll_posts_previous_mine;
+                fast_scroll_next = R.string.action_fast_scroll_posts_forward_mine;
+            } else if(Preferences.getFastSearchSource().equals(Preferences.VALUES_FAST_SEARCH_SOURCE_REPLIES_TO_MY_POSTS)){
+                fast_scroll_prev = R.string.action_fast_scroll_posts_previous_mention;
+                fast_scroll_next = R.string.action_fast_scroll_posts_forward_mention;
+            }
+            menu.add(0, OPTIONS_MENU_FAST_SCROLL_POSTS_PREVIOUS, 0, fast_scroll_prev)
+                    .setIcon(obtainIcon(R.attr.actionFindPrevious)).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+            menu.add(0, OPTIONS_MENU_FAST_SCROLL_POSTS_FORWARD, 0, fast_scroll_next)
+                    .setIcon(obtainIcon(R.attr.actionFindNext)).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         }
 
         menu.add(0, OPTIONS_MENU_ADD_POST, 0, R.string.action_add_post)

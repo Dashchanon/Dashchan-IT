@@ -39,7 +39,7 @@
 	<string name="text_bump_limit_format">Limite bump: %d posts</string>
 	<string name="text_captcha">Captcha</string>
 	<string name="text_closed_thread">Thread chiuso</string>
-	<string name="text_code_number_address">Codice, numero, indirizzo</string>
+	<string name="text_code_number_address">Board, numero pag. o indirizzo</string>
 	<string name="text_comment">Commento</string>
 	<string name="text_configuration">Configurazione</string>
 	<string name="text_confirmation">Conferma</string>
@@ -96,7 +96,7 @@
 	<string name="text_no_thread_information">Nessuna informazione</string>
 	<string name="text_older_7_days">Più vecchio di 7 giorni</string>
 	<string name="text_only_forum_format">Solamente %s</string>
-	<string name="text_open_pages">Apri pagine</string>
+	<string name="text_open_pages">Pagine aperte</string>
 	<string name="text_original_poster">OP</string>
 	<string name="text_page_format">Pagina %d</string>
 	<string name="text_pages_count_format">Numero pagine: %d</string>
@@ -382,14 +382,14 @@
 	<string name="preference_header_contents">Contenuti</string>
 	<string name="preference_header_favorites">Preferiti</string>
 	<!--<string name="preference_header_forum">Forum</string>-->
-	<string name="preference_header_forums">Forum</string>
+	<string name="preference_header_forums">Imageboard</string>
 	<string name="preference_header_general">Generale</string>
 	<string name="preference_header_interface">Interfaccia</string>
 
 	<string name="preference_category_additional">Aggiuntive</string>
-	<string name="preference_category_auto_refreshing">Thread aggiornati automaticamente</string>
+	<string name="preference_category_auto_refreshing">Aggiornamento automatico thread</string>
 	<string name="preference_category_connection">Connessione</string>
-	<string name="preference_category_downloading">Download in corso</string>
+	<string name="preference_category_downloading">Download</string>
 	<string name="preference_category_images">Immagini</string>
 	<string name="preference_category_navigation">Navigazione</string>
 	<string name="preference_category_navigation_drawer">Menù laterale</string>
@@ -407,7 +407,7 @@
 		<item>Mai</item>
 	</string-array>
 
-	<string name="preference_active_scrollbar">Barra scorrimento attiva</string>
+	<string name="preference_active_scrollbar">Barra di scorrimento veloce</string>
     <string name="preference_advanced_search">Ricerca avanzata</string>
     <string name="preference_advanced_search_summary">Cerca per parole o frasi</string>
     <string name="preference_advanced_search_message">La ricerca avanzata permette di cercare per parole o frasi.\n
@@ -445,7 +445,7 @@
 		<item>Thread vecchi</item>
 		<item>Tutti i thread</item>
 	</string-array>
-	<string name="preference_close_on_back">Chiusura pagine</string>
+	<string name="preference_close_on_back">Chiudi pagine</string>
 	<string name="preference_close_on_back_summary">Chiudi pagine col tasto indietro</string>
 	<string name="preference_cut_thumbnails">Taglia anteprime</string>
 	<string name="preference_cut_thumbnails_summary">Le anteprime riempiranno il riquadro</string>
@@ -473,7 +473,7 @@
 	<string-array name="preference_drawer_initial_position_choices">
 		<item>Chiuso</item>
 		<item>Preferiti</item>
-		<item>Forum</item>
+		<item>Imageboard</item>
 	</string-array>
 	<string name="preference_favorite_on_reply">Aggiungi thread quando rispondi</string>
 	<string name="preference_favorites_order">Ordine dei thread preferiti</string>
@@ -482,11 +482,11 @@
 		<item>Aggiungi al fondo</item>
 		<item>Ordina per titolo</item>
 	</string-array>
-	<string name="preference_hide_personal_data">Nascondi box dati personali</string>
+	<string name="preference_hide_personal_data">Nascondi sezione dati personali</string>
 	<string name="preference_highlight_unread">Evidenzia post non letti</string>
 	<string-array name="preference_highlight_unread_choices">
-		<item>Nascondi automaticamente</item>
-		<item>Nascondi al tocco</item>
+		<item>Rimuovi evidenziazione automaticamente</item>
+		<item>Rimuovi evidenziazione al tocco</item>
 		<item>Non evidenziare mai</item>
 	</string-array>
 	<string name="preference_huge_captcha">Captcha grossi</string>
@@ -501,12 +501,12 @@
 	<string name="preference_locale">Lingua</string>
 	<string name="preference_manage_cookies">Gestisci cookie</string>
 	<string name="preference_merge_chans">Unisci pagine</string>
-	<string name="preference_merge_chans_summary">Mostra pagine per tutti i forum</string>
+	<string name="preference_merge_chans_summary">Mostra pagine per tutte le imageboard</string>
 	<string name="preference_notify_download_complete">Notifica quando il download è completo</string>
-	<string name="preference_notify_download_complete_summary">Mostrerà le notifiche Heads-Up</string>
+	<string name="preference_notify_download_complete_summary">Mostrerà una notifica al completamento</string>
 	<string name="preference_page_by_page">Navigazione a pagine</string>
 	<string name="preference_page_by_page_summary">Non usare lista lunga</string>
-	<string name="preference_pages_list">Ordine degli header</string>
+	<string name="preference_pages_list">Ordine delle categorie</string>
 	<string-array name="preference_pages_list_choices">
 		<item>Pagine in cima</item>
 		<item>Preferiti in cima</item>
@@ -516,7 +516,7 @@
 	<string name="preference_partial_thread_loading_summary">Consente di scaricare solo i nuovi post invece che
 		tutto il thread</string>
 	<string name="preference_password_for_removal">Password per la cancellazione</string>
-	<string name="preference_password_for_removal_summary">In uso per invio e cancellazione post</string>
+	<string name="preference_password_for_removal_summary">Usata per invio e cancellazione post</string>
 	<string name="preference_post_max_lines">Numero massimo di righe</string>
 	<string name="preference_post_max_lines_summary">Taglia post lunghi se il numero di righe supera
 		un certo valore</string>
@@ -524,7 +524,7 @@
 	<string name="preference_remember_history">Salva cronologia</string>
 	<string name="preference_recaptcha_javascript">Usa JavaScript per i reCAPTCHA</string>
 	<string name="preference_recaptcha_javascript_summary">Semplifica il reCAPTCHA di Google</string>
-	<string name="preference_scroll_thread_gallery">Scorri thread mentre scorri la galleria</string>
+	<string name="preference_scroll_thread_gallery">Scorri thread insieme alla galleria</string>
 	<string name="preference_statistics">Statistiche</string>
 	<string name="preference_subdirectory_pattern">Pattern sottocartella</string>
 	<string-array name="preference_subdirectory_pattern_descriptions">
@@ -577,16 +577,24 @@
 	<string name="text_spoiler">Spoiler</string>
 	<string name="text_total_posts_count_format">Numero totale di post: %s</string>
 	<string name="action_fast_scroll_posts_previous">Trova post precedenti</string>
+	<string name="action_fast_scroll_posts_previous_mention">Menzione precedente</string>
+	<string name="action_fast_scroll_posts_previous_mine">Trova post mio precedente</string>
 	<string name="action_fast_scroll_posts_forward">Trova post successivi</string>
+	<string name="action_fast_scroll_posts_forward_mention">Prossima menzione</string>
+	<string name="action_fast_scroll_posts_forward_mine">Trova il prossimo post mio</string>
 	<string name="action_rating_up">Like!</string>
 	<string name="action_rating_down">Dislike!</string>
 	<string name="message_download_name_format">File %s</string>
 	<string name="message_image_warning_exif">Metadati Exif</string>
-	<string name="preference_header_forum">Forum</string>
+	<string name="preference_header_forum">Imageboard</string>
 	<string name="preference_category_search">Ricerca</string>
 	<string name="preference_fast_search">Ricerca rapida</string>
 	<string name="preference_fast_search_summary">La ricerca rapida permette di scorrere velocemente tra le risposte ai tuoi post</string>
 	<string name="preference_fast_search_source">Fonte dei messaggi per la ricerca rapida</string>
+	<string-array name="preference_fast_search_source_choices">
+		<item>Post miei</item>
+		<item>Risposte ai miei post</item>
+	</string-array>
 	<string name="preference_fast_search_smooth_scroll">Scorrimento fluido ricerca rapida</string>
 	<string name="preference_fast_search_smooth_scroll_summary">Se abilitata, lo spostamento tra i messaggi avverrà con scorrimento</string>
 	<string name="preference_chrome_custom_tabs">Chrome Custom Tabs</string>
