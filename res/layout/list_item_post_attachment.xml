@@ -33,6 +33,8 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
-        android:lineSpacingMultiplier="1.15" />
+        android:lineSpacingMultiplier="1.15"
+        android:maxLines="3"
+        android:ellipsize="end"/>
 
 </LinearLayout>

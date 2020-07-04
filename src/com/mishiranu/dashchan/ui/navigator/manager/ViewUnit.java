@@ -170,6 +170,7 @@ public class ViewUnit implements SingleLayerLinearLayout.OnTemporaryDetatchListe
             holder = new ThreadViewHolder();
             holder.cardView = cardView;
             holder.subject = cardView.findViewById(R.id.subject);
+            holder.embedInfo = cardView.findViewById(R.id.embed_info);
             holder.comment = cardView.findViewById(R.id.comment);
             holder.description = cardView.findViewById(R.id.thread_description);
             holder.stateSage = cardView.findViewById(R.id.state_sage);
@@ -184,7 +185,7 @@ public class ViewUnit implements SingleLayerLinearLayout.OnTemporaryDetatchListe
             holder.thumbnail.applyRoundedCorners(cardView.getBackgroundColor());
             ViewGroup.MarginLayoutParams thumbnailLayoutParams = (ViewGroup.MarginLayoutParams) holder
                     .thumbnail.getLayoutParams();
-            ViewUtils.applyScaleSize(holder.comment, holder.subject, holder.description,
+            ViewUtils.applyScaleSize(holder.comment, holder.subject, holder.embedInfo, holder.description,
                     holder.stateSage, holder.stateSticky, holder.stateClosed);
             if (ResourceUtils.isTablet(context.getResources().getConfiguration())) {
                 float density = ResourceUtils.obtainDensity(context);
@@ -223,6 +224,28 @@ public class ViewUnit implements SingleLayerLinearLayout.OnTemporaryDetatchListe
         } else {
             holder.subject.setVisibility(View.GONE);
         }
+        // Embed in thread page (3 lines with ellipsis)
+        boolean preferenceIsShowEmbedTitle = Preferences.isShowEmbedTitles();
+        String embedTitle = "";
+        String embeddedType = "";
+        String channel = "";
+        if(preferenceIsShowEmbedTitle && (postItem.getAttachmentItems() != null && postItem.getAttachmentItems().size() > 0 ) && (postItem.getAttachmentItems().get(0) instanceof AttachmentItem.EmbeddedAttachmentItem)){
+            AttachmentItem.EmbeddedAttachmentItem embeddedAttachmentItem = (AttachmentItem.EmbeddedAttachmentItem) postItem.getAttachmentItems().get(0);
+            embedTitle = embeddedAttachmentItem.title;
+            embeddedType = embeddedAttachmentItem.embeddedType;
+            boolean isYouTube = "youtube".equalsIgnoreCase(embeddedType);
+            boolean isVimeo = "vimeo".equalsIgnoreCase(embeddedType);
+            boolean isSoundCloud = "soundcloud".equalsIgnoreCase(embeddedType);
+            if(isYouTube || isVimeo || isSoundCloud){
+                channel = embeddedAttachmentItem.channel;
+            }
+        }
+        if (preferenceIsShowEmbedTitle && !StringUtils.isEmpty(embedTitle)) {
+            holder.embedInfo.setVisibility(View.VISIBLE);
+            holder.embedInfo.setText(getFormattedEmbedTitle(embedTitle, embeddedType, channel));
+        } else {
+            holder.embedInfo.setVisibility(View.GONE);
+        }
         CharSequence comment = postItem.getThreadCommentShort(parent.getWidth(), holder.comment.getTextSize(), 8);
         colorScheme.apply(postItem.getThreadCommentShortSpans());
         if (StringUtils.isEmpty(subject) && StringUtils.isEmpty(comment)) {
@@ -250,6 +273,25 @@ public class ViewUnit implements SingleLayerLinearLayout.OnTemporaryDetatchListe
         return convertView;
     }
 
+    private String getFormattedEmbedTitle(String embedTitle, String embeddedType, String channel) {
+        return getFormattedEmbedTitle(embedTitle, embeddedType, channel, false);
+    }
+
+    private String getFormattedEmbedTitle(String embedTitle, String embeddedType, String channel, boolean isThreadGrid) {
+        boolean preferenceIsShowChannel = Preferences.isShowEmbedTitles() && Preferences.isShowEmbedChannels();
+        boolean isYouTube = "youtube".equalsIgnoreCase(embeddedType);
+        boolean isVimeo = "vimeo".equalsIgnoreCase(embeddedType);
+        boolean isSoundCloud = "soundcloud".equalsIgnoreCase(embeddedType);
+        String appendix = "";
+        if(isYouTube) appendix = isThreadGrid ? "[YT]" : "[YouTube]";
+        if(isVimeo) appendix = isThreadGrid ? "[VM]" : "[Vimeo]";
+        if(isSoundCloud) appendix = isThreadGrid ? "[SC]" : "[SoundCloud]";
+        if(preferenceIsShowChannel && !isThreadGrid) {
+            appendix = appendix + " [" + channel + "]";
+        }
+        return appendix + " " + embedTitle;
+    }
+
     public View getThreadViewForGrid(PostItem postItem, View convertView, ViewGroup parent,
                                      HidePerformer hidePerformer, int contentHeight, boolean isBusy) {
         Context context = uiManager.getContext();
@@ -266,6 +308,7 @@ public class ViewUnit implements SingleLayerLinearLayout.OnTemporaryDetatchListe
             holder = new ThreadViewHolder();
             holder.cardView = cardView;
             holder.subject = cardView.findViewById(R.id.subject);
+            holder.embedInfo = cardView.findViewById(R.id.embed_info);
             holder.comment = cardView.findViewById(R.id.comment);
             holder.description = cardView.findViewById(R.id.thread_description);
             holder.thumbnail = cardView.findViewById(R.id.thumbnail);
@@ -277,7 +320,7 @@ public class ViewUnit implements SingleLayerLinearLayout.OnTemporaryDetatchListe
             holder.thumbnail.setFitSquare(true);
             holder.thumbnail.setDrawTouching(true);
             holder.thumbnail.applyRoundedCorners(cardView.getBackgroundColor());
-            ViewUtils.applyScaleSize(holder.comment, holder.subject, holder.description);
+            ViewUtils.applyScaleSize(holder.comment, holder.subject, holder.embedInfo, holder.description);
         } else {
             holder = (ThreadViewHolder) convertView.getTag();
         }
@@ -295,6 +338,27 @@ public class ViewUnit implements SingleLayerLinearLayout.OnTemporaryDetatchListe
             holder.subject.setText(subject.trim());
         } else {
             holder.subject.setVisibility(View.GONE);
+        }
+        boolean preferenceIsShowEmbedTitle = Preferences.isShowEmbedTitles();
+        String embedTitle = "";
+        String embeddedType = "";
+        String channel = "";
+        if(preferenceIsShowEmbedTitle && !postItem.getAttachmentItems().isEmpty() && (postItem.getAttachmentItems().get(0) instanceof AttachmentItem.EmbeddedAttachmentItem)){
+            AttachmentItem.EmbeddedAttachmentItem embeddedAttachmentItem = (AttachmentItem.EmbeddedAttachmentItem) postItem.getAttachmentItems().get(0);
+            embedTitle = embeddedAttachmentItem.title;
+            embeddedType = embeddedAttachmentItem.embeddedType;
+            boolean isYouTube = "youtube".equalsIgnoreCase(embeddedType);
+            boolean isVimeo = "vimeo".equalsIgnoreCase(embeddedType);
+            boolean isSoundCloud = "soundcloud".equalsIgnoreCase(embeddedType);
+            if(isYouTube || isVimeo || isSoundCloud){
+                channel = embeddedAttachmentItem.channel;
+            }
+        }
+        if (preferenceIsShowEmbedTitle && !StringUtils.isEmptyOrWhitespace(embedTitle) && !hidden) {
+            holder.embedInfo.setVisibility(View.VISIBLE);
+            holder.embedInfo.setText(getFormattedEmbedTitle(embedTitle.trim(), embeddedType, channel, true));
+        } else {
+            holder.embedInfo.setVisibility(View.GONE);
         }
         CharSequence comment = null;
         if (hidden) {
@@ -679,8 +743,7 @@ public class ViewUnit implements SingleLayerLinearLayout.OnTemporaryDetatchListe
                             ? NavigationUtils.NavigatePostMode.MANUALLY : NavigationUtils.NavigatePostMode.ENABLED);
                     attachmentHolder.thumbnailLongClickListener.update(attachmentItem);
                     attachmentHolder.thumbnail.setSfwMode(sfwMode);
-                    attachmentHolder.attachmentInfo.setText(attachmentItem.getDescription(AttachmentItem.FormatMode
-                            .THREE_LINES));
+                    attachmentHolder.attachmentInfo.setText(getDescriptionOrTitle(attachmentItem));
                     attachmentHolder.container.setVisibility(View.VISIBLE);
                 }
                 for (int i = size; i < holders; i++) {
@@ -711,6 +774,30 @@ public class ViewUnit implements SingleLayerLinearLayout.OnTemporaryDetatchListe
             holder.attachments.setVisibility(View.GONE);
             holder.attachmentViewCount = 1;
         }
+    }
+
+    private String getDescriptionOrTitle(AttachmentItem attachmentItem) {
+        boolean preferenceIsShowEmbedTitle = Preferences.isShowEmbedTitles();
+        if(!preferenceIsShowEmbedTitle) return attachmentItem.getDescription(AttachmentItem.FormatMode
+                .THREE_LINES);
+        String desc = "";
+        String appendix = "";
+        if(attachmentItem instanceof AttachmentItem.EmbeddedAttachmentItem){
+            String embeddedType = ((AttachmentItem.EmbeddedAttachmentItem) attachmentItem).embeddedType;
+            boolean isYouTube = "youtube".equalsIgnoreCase(embeddedType);
+            boolean isVimeo = "vimeo".equalsIgnoreCase(embeddedType);
+            boolean isSoundCloud = "soundcloud".equalsIgnoreCase(embeddedType);
+            if(isYouTube) appendix = "[YT]";
+            if(isVimeo) appendix = "[VM]";
+            if(isSoundCloud) appendix = "[SC]";
+            desc = ((AttachmentItem.EmbeddedAttachmentItem) attachmentItem).title;
+            if(!StringUtils.isEmpty(desc) && (isYouTube || isVimeo || isSoundCloud)){
+                desc = appendix + " " + desc;
+            }
+        }
+        if(StringUtils.isEmpty(desc)) desc = attachmentItem.getDescription(AttachmentItem.FormatMode
+                .THREE_LINES);
+        return desc;
     }
 
     private void handlePostViewIcons(PostViewHolder holder) {
@@ -1174,6 +1261,7 @@ public class ViewUnit implements SingleLayerLinearLayout.OnTemporaryDetatchListe
 
         public CardView cardView;
         public TextView subject;
+        public TextView embedInfo;
         public TextView comment;
         public TextView description;
         public ImageView stateSage, stateSticky, stateClosed;

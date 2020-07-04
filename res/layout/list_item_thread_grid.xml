@@ -58,6 +58,18 @@
                 android:textColor="?attr/colorPostPrimary"
                 android:textSize="16sp" />
 
+            <TextView
+                android:id="@+id/embed_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-2dp"
+                android:layout_marginBottom="2dp"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif-light"
+                android:singleLine="true"
+                android:textColor="?attr/colorPostPrimary"
+                android:textSize="14sp" />
+
             <com.mishiranu.dashchan.widget.CutTextView
                 android:id="@+id/comment"
                 android:layout_width="match_parent"

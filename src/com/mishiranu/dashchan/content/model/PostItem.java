@@ -611,8 +611,27 @@ public class PostItem implements AttachmentItem.Binder, ChanMarkup.MarkupExtra, 
     public String getAttachmentsDescription(Context context, AttachmentItem.FormatMode formatMode) {
         int count = attachmentItems.size();
         if (count == 1) {
+            // 1 embed inside thread post (1 line with ellipsis)
             AttachmentItem attachmentItem = attachmentItems.get(0);
-            return attachmentItem.getDescription(formatMode);
+            String desc = "";
+            boolean preferenceIsShowEmbedTitle = Preferences.isShowEmbedTitles();
+            if(!preferenceIsShowEmbedTitle) return attachmentItem.getDescription(formatMode);
+            if(attachmentItem != null && attachmentItem instanceof AttachmentItem.EmbeddedAttachmentItem){
+                desc = ((AttachmentItem.EmbeddedAttachmentItem) attachmentItem).title;
+                if(!StringUtils.isEmpty(desc)){
+                    String embeddedType = ((AttachmentItem.EmbeddedAttachmentItem) attachmentItem).embeddedType;
+                    boolean isYouTube = "youtube".equalsIgnoreCase(embeddedType);
+                    boolean isVimeo = "vimeo".equalsIgnoreCase(embeddedType);
+                    boolean isSoundCloud = "soundcloud".equalsIgnoreCase(embeddedType);
+                    if(isYouTube) desc = "[YT] " + desc;
+                    if(isVimeo) desc = "[VM] " + desc;
+                    if(isSoundCloud) desc = "[SC] " + desc;
+                }
+            }
+            if(StringUtils.isEmpty(desc)){
+                desc = attachmentItem.getDescription(formatMode);
+            }
+            return desc;
         } else {
             int size = 0;
             for (int i = 0; i < count; i++) {

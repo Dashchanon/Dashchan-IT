@@ -238,7 +238,7 @@ public abstract class AttachmentItem {
         }
     }
 
-    private static class EmbeddedAttachmentItem extends AttachmentItem {
+    public static class EmbeddedAttachmentItem extends AttachmentItem {
         public boolean isAudio;
         public boolean isVideo;
 
@@ -252,6 +252,8 @@ public abstract class AttachmentItem {
         public String title;
 
         private String thumbnailKey;
+
+        public String channel;
 
         public EmbeddedAttachmentItem(Binder binder) {
             super(binder);
@@ -445,6 +447,7 @@ public abstract class AttachmentItem {
         attachmentItem.fileName = attachmentItem.canDownload ? locator.createAttachmentFileName(fileUri,
                 attachment.getNormalizedForcedName()) : null;
         attachmentItem.title = attachment.getTitle();
+        attachmentItem.channel = attachment.getChannel();
         return attachmentItem;
     }
 

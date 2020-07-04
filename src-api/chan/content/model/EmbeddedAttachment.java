@@ -53,6 +53,7 @@ public final class EmbeddedAttachment implements Attachment {
     private final String mForcedName;
 
     private String mTitle;
+    private String mChannel;
 
     @Public
     public EmbeddedAttachment(Uri fileUri, Uri thumbnailUri, String embeddedType, ContentType contentType,
@@ -73,6 +74,7 @@ public final class EmbeddedAttachment implements Attachment {
         mCanDownload = canDownload;
         mForcedName = forcedName;
         String title = "";
+        String channel = "";
         String urlPrefix = "";
         String thumbnailUriString = null;
         boolean isVimeo = "vimeo".equalsIgnoreCase(embeddedType.toLowerCase());
@@ -107,6 +109,10 @@ public final class EmbeddedAttachment implements Attachment {
                 }
                 if (noembedResponse != null) {
                     title = CommonUtils.optJsonString(noembedResponse, "title");
+                    channel = CommonUtils.optJsonString(noembedResponse, "author_name");
+                    if(!StringUtils.isEmpty(channel)){
+                        mChannel = channel;
+                    }
                     if(!StringUtils.isEmpty(title)){
                         mTitle = title;
                         thumbnailUriString = CommonUtils.optJsonString(noembedResponse, "thumbnail_url");
@@ -204,6 +210,15 @@ public final class EmbeddedAttachment implements Attachment {
 
     public EmbeddedAttachment setTitle(String title) {
         mTitle = title;
+        return this;
+    }
+
+    public String getChannel() {
+        return mChannel;
+    }
+
+    public EmbeddedAttachment setChannel(String channel) {
+        mChannel = channel;
         return this;
     }
 

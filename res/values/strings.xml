@@ -548,6 +548,10 @@
     <string name="preference_recaptcha_javascript">Use JavaScript for reCAPTCHA</string>
     <string name="preference_recaptcha_javascript_summary">Simplifies Google reCAPTCHA</string>
     <string name="preference_scroll_thread_gallery">Scroll thread when scrolling gallery</string>
+    <string name="preference_show_embed_channel">Show channel in embed titles</string>
+    <string name="preference_show_embed_channel_summary">Attach channel name before the embed\'s title</string>
+    <string name="preference_show_embed_title">Show embed titles in posts</string>
+    <string name="preference_show_embed_title_summary">Show YouTube/Vimeo/SoundCloud title inside a user\'s post</string>
     <string name="preference_statistics">Statistics</string>
     <string name="preference_subdirectory_pattern">Subdirectory pattern</string>
     <string-array name="preference_subdirectory_pattern_descriptions">

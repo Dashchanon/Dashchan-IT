@@ -872,7 +872,15 @@ public class DialogUnit implements DialogStack.Callback {
             textView.setBackgroundColor(0xcc222222);
             attachmentItem.configureAndLoad(attachmentView, false, false, true);
             attachmentViews.add(attachmentView);
-            textView.setText(attachmentItem.getDescription(AttachmentItem.FormatMode.TWO_LINES));
+            boolean preferenceIsShowEmbedTitle = Preferences.isShowEmbedTitles();
+            String embedTitle = "";
+            String embeddedType = "";
+            if(preferenceIsShowEmbedTitle && attachmentItem instanceof AttachmentItem.EmbeddedAttachmentItem){
+                AttachmentItem.EmbeddedAttachmentItem embeddedAttachmentItem = (AttachmentItem.EmbeddedAttachmentItem)attachmentItem;
+                embedTitle = embeddedAttachmentItem.title;
+                embeddedType = embeddedAttachmentItem.embeddedType;
+            }
+            textView.setText(getAttachmentViewText(attachmentItem, embedTitle, embeddedType));
             View clickView = view.findViewById(R.id.click_view);
             clickView.setOnClickListener(clickListener);
             clickView.setOnLongClickListener(v -> {
@@ -908,6 +916,18 @@ public class DialogUnit implements DialogStack.Callback {
         dialog.show();
         notifySwitchBackground();
         attachmentDialog = dialog;
+    }
+
+    private String getAttachmentViewText(AttachmentItem attachmentItem, String embedTitle, String embeddedType) {
+        if(StringUtils.isEmpty(embedTitle)) return attachmentItem.getDescription(AttachmentItem.FormatMode.TWO_LINES);
+        boolean isYouTube = "youtube".equalsIgnoreCase(embeddedType);
+        boolean isVimeo = "vimeo".equalsIgnoreCase(embeddedType);
+        boolean isSoundCloud = "soundcloud".equalsIgnoreCase(embeddedType);
+        String appendix = "";
+        if(isYouTube) appendix = "[YT]";
+        if(isVimeo) appendix = "[VM]";
+        if(isSoundCloud) appendix = "[SC]";
+        return appendix + " " + embedTitle;
     }
 
     public void openAttachmentOrDialog(Context context, View imageView, List<AttachmentItem> attachmentItems,

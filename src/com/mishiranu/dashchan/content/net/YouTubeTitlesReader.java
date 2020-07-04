@@ -22,7 +22,6 @@ import com.mishiranu.dashchan.C;
 import com.mishiranu.dashchan.preference.Preferences;
 import com.mishiranu.dashchan.text.HtmlParser;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
@@ -44,7 +43,6 @@ import chan.content.model.EmbeddedAttachment;
 import chan.content.model.Post;
 import chan.http.HttpException;
 import chan.http.HttpHolder;
-import chan.http.HttpRequest;
 import chan.util.CommonUtils;
 import chan.util.StringUtils;
 
@@ -56,6 +54,46 @@ public class YouTubeTitlesReader {
 
     public static YouTubeTitlesReader getInstance() {
         return INSTANCE;
+    }
+
+    private void readYouTubeTitlesAndInfo(HashMap<String, YoutubeInfo> writeTo, ArrayList<String> embeddedCodes,
+                                          int from, int count, HttpHolder holder) throws HttpException, InvalidResponseException {
+        StringBuilder builder = new StringBuilder();
+        for (int i = from, size = Math.min(embeddedCodes.size(), from + count); i < size; i++) {
+            if (builder.length() > 0) {
+                builder.append(',');
+            }
+            builder.append(embeddedCodes.get(i));
+            JSONObject noembedResponse = null;
+            if(!StringUtils.isEmpty(embeddedCodes.get(i))){
+                String videoId = embeddedCodes.get(i);
+				/*
+					This could cause performance issues when a big
+					number of attachments is present, meaning several requests need to be made.
+					Should be replaced with the standard app approach of sending requests.
+				*/
+                HttpURLConnection urlConnection = null;
+                try {
+                    URL url = new URL("https://noembed.com/embed?url=https://www.youtube.com/watch?v=" + videoId);
+                    urlConnection = (HttpURLConnection) url.openConnection();
+                    InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                    String contentAsString = convertInputStreamToString(in);
+                    if(!StringUtils.isEmpty(contentAsString)){
+                        noembedResponse = new JSONObject(contentAsString);
+                    }
+                } catch (Exception e) {
+                    // Ignore exception
+                } finally {
+                    urlConnection.disconnect();
+                }
+                if(noembedResponse != null){
+                    String title = CommonUtils.optJsonString(noembedResponse, "title");
+                    if(!StringUtils.isEmpty(title)){
+                        writeTo.put(videoId, new YoutubeInfo(title, noembedResponse));
+                    }
+                }
+            }
+        }
     }
 
     private void readYouTubeTitles(HashMap<String, String> writeTo, ArrayList<String> embeddedCodes,
@@ -145,6 +183,63 @@ public class YouTubeTitlesReader {
 
     private final HashMap<String, String> cachedYouTubeTitles = new HashMap<>();
 
+    private final HashMap<String, YoutubeInfo> cachedYouTubeTitlesAndInfo = new HashMap<>();
+
+    public class YoutubeInfo {
+        private String title = "";
+        private JSONObject response;
+
+        public YoutubeInfo(String title) {
+            this.title = title;
+        }
+
+        public YoutubeInfo(String title, JSONObject response) {
+            this.title = title;
+            this.response = response;
+        }
+
+        public JSONObject getResponse() {
+            return response;
+        }
+
+        public void setResponse(JSONObject response) {
+            this.response = response;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+    }
+
+    public final HashMap<String, YoutubeInfo> readYouTubeTitlesAndInfo(ArrayList<String> embeddedCodes, HttpHolder holder)
+            throws HttpException, InvalidResponseException {
+        HashMap<String, YoutubeInfo> result = new HashMap<>();
+        for (int i = embeddedCodes.size() - 1; i >= 0; i--) {
+            String id = embeddedCodes.get(i);
+            YoutubeInfo info = cachedYouTubeTitlesAndInfo.get(embeddedCodes.get(i));
+            if (info != null && info.getTitle() != null) {
+                result.put(id, info);
+                embeddedCodes.remove(i);
+            }
+        }
+        final int maxCount = 50; // Max allowed count per request.
+        for (int i = 0; i < embeddedCodes.size(); i += maxCount) {
+            readYouTubeTitlesAndInfo(result, embeddedCodes, i, maxCount, holder);
+        }
+        if (result.size() > 0) {
+            for (String id : result.keySet()) {
+                cachedYouTubeTitlesAndInfo.put(id, result.get(id));
+            }
+            return result;
+        }
+        return null;
+    }
+
     public final HashMap<String, String> readYouTubeTitles(ArrayList<String> embeddedCodes, HttpHolder holder)
             throws HttpException, InvalidResponseException {
         HashMap<String, String> result = new HashMap<>();
@@ -180,6 +275,8 @@ public class YouTubeTitlesReader {
 
         public abstract int applyTitle(String title);
 
+        public abstract int applyTitle(String title, JSONObject response);
+
         public abstract void fixPositions(int shift);
     }
 
@@ -204,6 +301,11 @@ public class YouTubeTitlesReader {
         }
 
         @Override
+        public int applyTitle(String title, JSONObject response) {
+            return applyTitle(title);
+        }
+
+        @Override
         public void fixPositions(int shift) {
             if (shift != 0) {
                 start += shift;
@@ -222,6 +324,16 @@ public class YouTubeTitlesReader {
 
         @Override
         public int applyTitle(String title) {
+            attachment.setTitle(title);
+            return 0;
+        }
+
+        @Override
+        public int applyTitle(String title, JSONObject response) {
+            if(response != null){
+                String channel = CommonUtils.optJsonString(response, "author_name");
+                attachment.setChannel(channel);
+            }
             attachment.setTitle(title);
             return 0;
         }
@@ -327,15 +439,16 @@ public class YouTubeTitlesReader {
             }
         }
         if (embeddedCodes != null) {
-            HashMap<String, String> titles = readYouTubeTitles(embeddedCodes, holder);
-            if (titles != null) {
-                for (String embeddedCode : titles.keySet()) {
+            HashMap<String, YoutubeInfo> titlesAndInfo = readYouTubeTitlesAndInfo(embeddedCodes, holder);
+            if (titlesAndInfo != null) {
+                for (String embeddedCode : titlesAndInfo.keySet()) {
                     for (EmbeddedApplyHolder applyHolder : applyHolders) {
                         int shift = 0;
                         for (EmbeddedCodeData embeddedCodeData : applyHolder.embeddedCodeDatas) {
                             embeddedCodeData.fixPositions(shift);
-                            if (embeddedCodeData.embeddedCode.equals(embeddedCode)) {
-                                shift += embeddedCodeData.applyTitle(titles.get(embeddedCode));
+                            if (embeddedCodeData.embeddedCode.equals(embeddedCode) && titlesAndInfo.get(embeddedCode) != null) {
+                                    JSONObject response = titlesAndInfo.get(embeddedCode).getResponse();
+                                    shift += embeddedCodeData.applyTitle(titlesAndInfo.get(embeddedCode).getTitle(), response);
                             }
                         }
                     }

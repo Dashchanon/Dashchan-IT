@@ -851,6 +851,20 @@ public class Preferences {
         return PREFERENCES.getBoolean(KEY_SCROLL_THREAD_GALLERY, DEFAULT_SCROLL_THREAD_GALLERY);
     }
 
+    public static final String KEY_SHOW_EMBED_TITLES = "show_embed_titles";
+    public static final boolean DEFAULT_SHOW_EMBED_TITLES = true;
+
+    public static boolean isShowEmbedTitles() {
+        return PREFERENCES.getBoolean(KEY_SHOW_EMBED_TITLES, DEFAULT_SHOW_EMBED_TITLES);
+    }
+
+    public static final String KEY_SHOW_EMBED_CHANNELS = "show_embed_channels";
+    public static final boolean DEFAULT_SHOW_EMBED_CHANNELS = false;
+
+    public static boolean isShowEmbedChannels() {
+        return PREFERENCES.getBoolean(KEY_SHOW_EMBED_CHANNELS, DEFAULT_SHOW_EMBED_CHANNELS);
+    }
+
     public static final String KEY_SHOWCASE_GALLERY = "showcase_gallery";
 
     public static void consumeShowcaseGallery() {

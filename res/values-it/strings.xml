@@ -525,6 +525,10 @@
 	<string name="preference_recaptcha_javascript">Usa JavaScript per i reCAPTCHA</string>
 	<string name="preference_recaptcha_javascript_summary">Semplifica il reCAPTCHA di Google</string>
 	<string name="preference_scroll_thread_gallery">Scorri thread insieme alla galleria</string>
+	<string name="preference_show_embed_channel">Mostra canale insieme al titolo dell\'embed</string>
+	<string name="preference_show_embed_channel_summary">Mostra anche il canale prima del titolo dell\'embed</string>
+	<string name="preference_show_embed_title">Mostra titoli degli embed nei post</string>
+	<string name="preference_show_embed_title_summary">Mostra il titolo dell\'embed YouTube, Vimeo o SoundCloud direttamente nel post</string>
 	<string name="preference_statistics">Statistiche</string>
 	<string name="preference_subdirectory_pattern">Pattern sottocartella</string>
 	<string-array name="preference_subdirectory_pattern_descriptions">

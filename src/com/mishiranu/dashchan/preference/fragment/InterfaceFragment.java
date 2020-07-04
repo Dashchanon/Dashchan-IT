@@ -47,6 +47,10 @@ public class InterfaceFragment extends BasePreferenceFragment {
                 R.string.preference_active_scrollbar, 0);
         makeCheckBox(null, true, Preferences.KEY_SCROLL_THREAD_GALLERY, Preferences.DEFAULT_SCROLL_THREAD_GALLERY,
                 R.string.preference_scroll_thread_gallery, 0);
+        makeCheckBox(null, true, Preferences.KEY_SHOW_EMBED_TITLES, Preferences.DEFAULT_SHOW_EMBED_TITLES,
+                R.string.preference_show_embed_title, R.string.preference_show_embed_title_summary);
+        makeCheckBox(null, true, Preferences.KEY_SHOW_EMBED_CHANNELS, Preferences.DEFAULT_SHOW_EMBED_CHANNELS,
+                R.string.preference_show_embed_channel, R.string.preference_show_embed_channel_summary);
 
         PreferenceCategory navigationDrawerCategory = makeCategory(R.string.preference_category_navigation_drawer);
         makeList(navigationDrawerCategory, Preferences.KEY_PAGES_LIST, Preferences.VALUES_PAGES_LIST,
@@ -93,6 +97,8 @@ public class InterfaceFragment extends BasePreferenceFragment {
                 Preferences.DEFAULT_HIDE_PERSONAL_DATA, R.string.preference_hide_personal_data, 0);
         makeCheckBox(submissionCategory, true, Preferences.KEY_HUGE_CAPTCHA, Preferences.DEFAULT_HUGE_CAPTCHA,
                 R.string.preference_huge_captcha, 0);
+
+        addDependency(Preferences.KEY_SHOW_EMBED_CHANNELS, Preferences.KEY_SHOW_EMBED_TITLES, true);
     }
 
     @Override

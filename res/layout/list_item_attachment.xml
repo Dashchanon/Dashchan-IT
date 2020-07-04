@@ -39,7 +39,9 @@
         android:paddingRight="8dp"
         android:paddingBottom="6dp"
         android:textColor="#ffffffff"
-        android:textSize="11sp" />
+        android:textSize="11sp"
+        android:ellipsize="end"
+        android:maxLines="2"/>
 
     <com.mishiranu.dashchan.widget.ClickableView
         android:id="@+id/click_view"
