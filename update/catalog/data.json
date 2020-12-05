@@ -936,6 +936,19 @@
       "fingerprint": "5A:4F:61:FA:86:C3:64:34:70:81:A8:B3:18:49:53:DE:FC:CD:11:37:2E:93:59:93:89:D6:13:82:B4:7E:82:D3"
     }
   ],
+  "vecchiochan":
+  [
+    {
+      "title": "Release",
+      "name": "1.8.1",
+      "code": 5,
+      "version": 1,
+      "minSdk": 16,
+      "length": 59427,
+      "source": "/Dashchanon/Dashchan-IT/master/update/catalog/package/DashchanVecchiochan.apk",
+      "fingerprint": "18:83:22:11:46:8A:F6:D3:B8:3D:30:50:1C:E1:5D:33:05:8F:AC:9A:3A:CC:3B:EC:AD:D1:12:08:EE:AA:BC:B9"
+    }
+  ],
   "webm":
   [
     {
